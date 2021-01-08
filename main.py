@@ -188,10 +188,10 @@ class PageOne(tk.Frame):
                           command=lambda: self.option2(controller))
         self.opt2.grid(row=2, column=0)
         self.opt3 = ttk.Button(self, text="School is starting, need to study!!",
-                          command=lambda: self.option1(controller))
+                          command=lambda: self.option3(controller))
         self.opt3.grid(row=3, column=0)
         self.opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
-                          command=lambda: self.option1(controller))
+                          command=lambda: self.option4(controller))
         self.opt4.grid(row=4, column=0)
 ##        home_button = ttk.Button(self, text="Home",
 ##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
@@ -236,6 +236,42 @@ class PageOne(tk.Frame):
             text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
             player.editPHealth(1, 1)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
+
+    def option3(self, controller):
+        self.disable_buttons()
+
+        # 1/4 chace to get a bad outcome
+        outcome = random.randint(0,4)
+
+        if outcome == 0:
+            text = tk.Label(self, text="Feeling stressed and overworked even before school starts! \n +2 academics, -1 mental health",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editMHealth(1, 0)
+            player.editAcad(2, 1)
+        else:
+            text = tk.Label(self, text="Feeling stressed prepared for the new semester! ᕙ(`▽´)ᕗ \n +1 academics",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
+
+    def option4(self, controller):
+        self.disable_buttons()
+
+        # good social skills, 
+        if player.social_life >= 8:
+            text = tk.Label(self, text="Thanks to your great social skills, you and prof are now good friends~ \n +1 social life, +1 academics",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editSL(1, 1)
+            player.editAcad(1, 1)
+        else:
+            text = tk.Label(self, text="People think you're slightly weird :( \n -1 social life, -1 mental health",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editMHealth(1, 0)
+            player.editSL(1, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
