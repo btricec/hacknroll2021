@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
-# a random comment
 
 class SampleApp(tk.Tk):
 
