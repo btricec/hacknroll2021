@@ -109,7 +109,7 @@ class SampleApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven): #, PageGameover):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven, PageEight): 
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
@@ -398,7 +398,7 @@ class PageTwo(tk.Frame):
             command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
 
         outcome = random.randint(0,9)
-        player.editAcad(-5,1)
+        player.editAcad(-2,1)
         player.editMHealth(1,1)
         player.editPHealth(-1, 1)
         player.editSL(1,1)
@@ -632,7 +632,7 @@ Spent a day on the toilet!
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
 
-### EXAM
+### QUIZ
 
 class PageFive(tk.Frame):
 
@@ -725,7 +725,7 @@ class PageFive(tk.Frame):
             text = tk.Label(self, text="Oddly, this kind of worked out (?) \n no change",
                              font=controller.title_font, wraplength=1000).grid(row=5, column=0)
 
-            next_button = ttk.Button(self, text="Next",
+        next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
 
 # SICK
@@ -840,6 +840,120 @@ Social life +1, Mental health +1""",
                                  command=lambda: controller.show_frame("PageSeven")).grid(row=7, column=0)
 
 class PageSeven(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        self.img = ImageTk.PhotoImage(file="online_exam.png")
+        img_label = tk.Label(self, image=self.img)
+        img_label.grid(row=0, column=0)
+
+        # make all buttons an attribute of the class (i.e. self.opt1)
+        self.opt1 = ttk.Button(self, text="Join the Discord of course! I don't want to be put at an unfair advantage.",
+                          command=lambda: self.option1(controller))
+        #  and put .grid() in a new line :)
+        self.opt1.grid(row=1, column=0)
+        self.opt2 = ttk.Button(self, text="Don't join the discord group. I have full confidence in my abilities.",
+                          command=lambda: self.option2(controller))
+        self.opt2.grid(row=2, column=0)
+        self.opt3 = ttk.Button(self, text="Join the Discord group, not to discuss but just to double check my answers",
+                          command=lambda: self.option3(controller))
+        self.opt3.grid(row=3, column=0)
+        self.opt4 = ttk.Button(self, text="Be a whistleblower! Flag this discord group to your prof.",
+                          command=lambda: self.option4(controller))
+        self.opt4.grid(row=4, column=0)
+##        home_button = ttk.Button(self, text="Home",
+##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
+
+    # makes sure plaer cannot choose another option after pressing a button
+    def disable_buttons(self):
+        self.opt1['state'] = tk.DISABLED
+        self.opt2['state'] = tk.DISABLED
+        self.opt3['state'] = tk.DISABLED
+        self.opt4['state'] = tk.DISABLED
+
+    def option1(self, controller):
+        self.disable_buttons()
+
+        # 1/4 chance to get good outcome
+        outcome = random.randint(0,3)
+
+        if outcome == 0:
+            text = tk.Label(self, text="Thanks to some senpais in the group, managed to do extremely well for the quiz!\n+4 academics",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editAcad(4, 1)
+        else:
+            text = tk.Label(self, text="""Quiz answers were all so similar, you and your friends got caught for cheating and given an F grade
+At least you all failed together? 
+-4 academics, +1 social life, -1 mental health""",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editSL(1, 1)
+            player.editAcad(4, 0)
+            player.editMHealth(1, 0)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageEight")).grid(row=6, column=0)
+
+    def option2(self, controller):
+        self.disable_buttons()
+
+        # good outcome if acad > 8
+        if player.acad > 8:
+            text = tk.Label(self, text="""Confidence was unfounded. Somehow still did badly...
+But, more importantly, you still have your integrity!
+It's too bad that counts for nothing in this game.
+-2 academics""",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editAcad(2, 0)
+        else:
+            text = tk.Label(self, text="Kudos to you for studying hard and achieving good results in a morally reighteous way! \n+2 academics",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editAcad(2, 1)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageEight")).grid(row=6, column=0)
+
+    def option3(self, controller):
+        self.disable_buttons()
+
+        # 1/2 chace to get a bad outcome
+        outcome = random.randint(0,1)
+
+        if outcome == 0:
+            text = tk.Label(self, text="""Reading the discussions, you were swayed by their convincing arguments.
+But your original answers were actually the right ones?
+Better to rely on yourself next time...
+-2 academics""",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editAcad(2, 0)
+        else:
+            text = tk.Label(self, text="""Reading the discussions made you realise that you had fallen into the Professor's tricks!
+Changed your answers and did well for the quiz!
+But your friends think you're a free loader for not contributing anything.
++2 academics -2 social life""",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editAcad(2, 1)
+            player.editSL(2, 0)
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageEight")).grid(row=6, column=0)
+
+    def option4(self, controller):
+        self.disable_buttons()
+
+        text = tk.Label(self, text="""Prof ordered the closure of the discord chat and made the students involved sit for the quiz physically
+Somehow it was leaked that you were the whistleblower, your friends are NOT happy
+But prof commends you for your courage in doing the right thing!
++2 academics, -4 social life, -1 mental health""",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+        player.editAcad(2, 1)
+        player.editSL(4, 0)
+        player.editMHealth(1, 0)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageEight")).grid(row=6, column=0)
+
+class PageEight(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
