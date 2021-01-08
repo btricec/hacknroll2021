@@ -170,7 +170,7 @@ class StartPage(tk.Frame):
 
     def snakeMaster(self, name, controller):
         global player
-        player = Player(name, 9, 5, 3)
+        player = Player(name, 9, 5, 6)
         text = tk.Label(self, text="Hello " + name + " you have chosen Snake Master!", padx=40).grid(row=4, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
