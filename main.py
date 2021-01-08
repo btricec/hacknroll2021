@@ -68,7 +68,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, PageOne, PageTwo, PageThree):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -113,10 +113,10 @@ class StartPage(tk.Frame):
 ##        img_label = ttk.Label(self, image=self.img)
 ##        img_label.pack()
 
-        self.Student1=ImageTk.PhotoImage(Image.open("Student1.jpeg").resize((300, 200)))
-        self.Student2=ImageTk.PhotoImage(Image.open("Student2.jpeg").resize((300, 200)))
-        self.Student3=ImageTk.PhotoImage(Image.open("Student3.jpeg").resize((300, 200)))
-        self.Student4=ImageTk.PhotoImage(Image.open("Student4.jpeg").resize((300, 200)))
+        self.Student1=ImageTk.PhotoImage(Image.open("Student1.jpeg").resize((250, 200)))
+        self.Student2=ImageTk.PhotoImage(Image.open("Student2.jpeg").resize((250, 200)))
+        self.Student3=ImageTk.PhotoImage(Image.open("Student3.jpeg").resize((250, 200)))
+        self.Student4=ImageTk.PhotoImage(Image.open("Student4.jpeg").resize((250, 200)))
 
         opt1 = tk.Button(self, image = self.Student1, command=lambda: self.drMagic(name.get(), controller)).grid(row=2, column=0, columnspan=2)
         opt2 = tk.Button(self, image = self.Student2, command=lambda: self.snakeMaster(name.get(), controller)).grid(row=2, column=2, columnspan=2)
@@ -162,8 +162,8 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Scenario 1 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
-        #label.pack(side="top", fill="x", pady=10)
+        label = tk.Label(self, text="It is the last day of your orientation camp! ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
+        label.pack(side="top", fill="x", pady=10)
 
         self.img = ImageTk.PhotoImage(file="placeholder.png")
         img_label = tk.Label(self, image=self.img)
@@ -183,6 +183,32 @@ class PageOne(tk.Frame):
             command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=1, columnspan=2)
 
 class PageTwo(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        label = tk.Label(self, text="Scenario 2 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
+        #label.pack(side="top", fill="x", pady=10)
+
+        self.img = ImageTk.PhotoImage(file="placeholder.png")
+        img_label = tk.Label(self, image=self.img)
+        img_label.grid(row=1, column=0, columnspan=4)
+
+        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=3, column=0, columnspan=2)
+        opt2 = ttk.Button(self, text="Option 2").grid(row=3, column=2, columnspan=2)
+        opt3 = ttk.Button(self, text="Option 3").grid(row=4, column=0, columnspan=2)
+        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2, columnspan=2)
+##        home_button = ttk.Button(self, text="Home",
+##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
+
+    def option1(self, controller):
+        player.editPHealth(100, 1)
+        text = tk.Label(self, text="+100 health!").grid(row=5, column=0, columnspan=4)
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageThree")).grid(row=6, column=1, columnspan=2)
+
+class PageThree(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
