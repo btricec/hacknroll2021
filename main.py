@@ -113,10 +113,10 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = ttk.Label(self, text="This is the start page", font=controller.title_font)
+        label = ttk.Label(self, text="Are you ready for your first semester of college??", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2)
 
-        name_label = tk.Label(self, text="Enter your name: ").grid(row=1, column=0)
+        name_label = tk.Label(self, text="Enter your name and choose an avatar to start ").grid(row=1, column=0)
         name = tk.Entry(self)
         name.grid(row=1, column=1)
 
@@ -205,7 +205,7 @@ class PageOne(tk.Frame):
 
     def option1(self, controller):
         self.disable_buttons()
-        
+
         # 1/2 chance to get bad outcome
         outcome = random.randint(0,1)
 
@@ -225,7 +225,7 @@ class PageOne(tk.Frame):
 
     def option2(self, controller):
         self.disable_buttons()
-        
+
         # 1/10 chace to get a bad outcome
         outcome = random.randint(0,9)
 
