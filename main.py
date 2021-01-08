@@ -3,14 +3,15 @@ from tkinter import ttk
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
 import pygame
+import random
 
-pygame.mixer.init()
-
-def play():
-    pygame.mixer.music.load("song.mp3")
-    pygame.mixer.music.play(loops = 2)
-
-play()
+##pygame.mixer.init()
+##
+##def play():
+##    pygame.mixer.music.load("song.mp3")
+##    pygame.mixer.music.play(loops = 2)
+##
+##play()
 
 class Player():
     def __init__(self, name, acad, p_health, social_life):
@@ -171,25 +172,52 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="It is the last day of your orientation camp! ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
-        label.pack(side="top", fill="x", pady=10)
+        #label = tk.Label(self, text="It is the last day of your orientation camp! ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
 
-        self.img = ImageTk.PhotoImage(file="placeholder.png")
+        self.img = ImageTk.PhotoImage(file="orientation.png")
         img_label = tk.Label(self, image=self.img)
-        img_label.grid(row=1, column=0, columnspan=4)
+        img_label.grid(row=0, column=0)
 
-        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=3, column=0, columnspan=2)
-        opt2 = ttk.Button(self, text="Option 2").grid(row=3, column=2, columnspan=2)
-        opt3 = ttk.Button(self, text="Option 3").grid(row=4, column=0, columnspan=2)
-        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2, columnspan=2)
+        opt1 = ttk.Button(self, text="Go Clubbing! WOOHOO ♪┏(・o･)┛♪",
+                          command=lambda: self.option1(controller)).grid(row=1, column=0)
+        opt2 = ttk.Button(self, text="Camp was tiring, go home and sleep",
+                          command=lambda: self.option2(controller)).grid(row=2, column=0)
+        opt3 = ttk.Button(self, text="School is starting, need to study!!",
+                          command=lambda: self.option1(controller)).grid(row=3, column=0)
+        opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
+                          command=lambda: self.option1(controller)).grid(row=4, column=0)
 ##        home_button = ttk.Button(self, text="Home",
 ##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
     def option1(self, controller):
-        player.editPHealth(100, 1)
-        text = tk.Label(self, text="+100 health!").grid(row=5, column=0, columnspan=4)
+        # 1/2 chance to get bad outcome
+        outcome = random.randint(0,1)
+
+        if outcome == 0:
+            text = tk.Label(self, text="You had a great time dancing and drinking with your friends :D \n +1 social life, -2 money",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editSL(1, 1)
+            player.editMoney(2, 0)
+        else:
+            text = tk.Label(self, text="You got drunk and puked all over your friend (ew gross) \n -1 social life, -2 money",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editSL(1, 0)
+            player.editMoney(2, 0)
+
         next_button = ttk.Button(self, text="Next",
-            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=1, columnspan=2)
+            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
+
+    def option2(self, controller):
+        # 1/10 chace to get a bad outcome
+        outcome = random.randint(0,9)
+
+        if outcome == 0:
+            text = tk.Label(self, text="You fell asleep on the bus ride and missed your stop! \n - no changes -",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+        else:
+            text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health",
+                            font=controller.title_font, wraplength=1000).grid(row=5, column=0)
+            player.editPHealth(1, 1)
 
 class PageTwo(tk.Frame):
 
@@ -197,17 +225,16 @@ class PageTwo(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Scenario 2 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
-        #label.pack(side="top", fill="x", pady=10)
+##        label = tk.Label(self, text="Scenario 2 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
 
         self.img = ImageTk.PhotoImage(file="placeholder.png")
         img_label = tk.Label(self, image=self.img)
-        img_label.grid(row=1, column=0, columnspan=4)
+        img_label.grid(row=0, column=0)
 
-        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=3, column=0, columnspan=2)
-        opt2 = ttk.Button(self, text="Option 2").grid(row=3, column=2, columnspan=2)
-        opt3 = ttk.Button(self, text="Option 3").grid(row=4, column=0, columnspan=2)
-        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2, columnspan=2)
+        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=1, column=0)
+        opt2 = ttk.Button(self, text="Option 2").grid(row=2, column=0)
+        opt3 = ttk.Button(self, text="Option 3").grid(row=3, column=0)
+        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2)
 ##        home_button = ttk.Button(self, text="Home",
 ##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
