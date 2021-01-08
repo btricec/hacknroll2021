@@ -68,6 +68,19 @@ class Player():
             warnings.append("money")
         return warnings
 
+    def gameOver(self):
+        if self.acad < 1:
+            return "Academics"
+        if self.social_life < 1:
+            return "Social life"
+        if self.p_health < 1:
+            return "Physical health"
+        if self.m_health < 1:
+            return "Mental health"
+        if self.money < 1:
+            return "Money"
+        return "none"
+
 player = Player("nil", 10, 10, 10)
 
 
@@ -87,16 +100,16 @@ class SampleApp(tk.Tk):
 
         stats_frame.place(x=0, y=0)
 
-        container = tk.Frame(self)
+        self.container = tk.Frame(self)
 ##        container.pack(side="top", fill="both", expand=True)
-        container.place(x=0, y=30)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container.place(x=0, y=30)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
         for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix):
             page_name = F.__name__
-            frame = F(parent=container, controller=self)
+            frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
 
             # put all of the pages in the same location;
@@ -107,6 +120,12 @@ class SampleApp(tk.Tk):
         self.show_frame("StartPage")
 
     def doChecks(self):
+        end = player.gameOver()
+        if end != "none":
+            frame = PageGameover(parent=self.container, controller=self, stat=end)
+            frame.tkraise()
+            return
+            
         warnings = player.warning()
         if len(warnings) == 1:
             messagebox.showwarning("WARNING!", warnings[0] + " has fallen below 3!")
@@ -118,7 +137,6 @@ class SampleApp(tk.Tk):
 
     def show_frame(self, page_name):
         # update stats
-
         stats_frame = tk.Frame(self)
         phy_health = tk.Label(stats_frame, text="Physical Health:" + str(player.p_health), padx=20).pack(side="left")
         mental_health = tk.Label(stats_frame, text="Mental Health:" + str(player.m_health), padx=20).pack(side="left")
@@ -131,6 +149,7 @@ class SampleApp(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
+
         self.doChecks()
 
 
@@ -307,32 +326,46 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        label = tk.Label(self, text="Scenario 1 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
+        #label.pack(side="top", fill="x", pady=10)
         
         
         self.img = ImageTk.PhotoImage(Image.open("ddl/ddl.png").resize((480, 270)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0, columnspan=4)
 
-        self.opt1 = ttk.Button(self, text="Submit anyway, and go for a drink to celebrate", command=lambda: self.option2(controller))
-        self.opt1.grid(row=3, column=0, columnspan=2)
-        self.opt2 = ttk.Button(self, text="Email your professor and ask for an extension", command=lambda: self.option1(controller))
-        self.opt2.grid(row=4, column=0, columnspan=2)
-        self.opt3 = ttk.Button(self, text="Upload an empty document", command=lambda: self.option1(controller))
-        self.opt3.grid(row=5, column=0, columnspan=2)
-        self.opt4 = ttk.Button(self, text="Just submit late and pray professor won’t find out", command=lambda: self.option1(controller))
-        self.opt4.grid(row=6, column=0, columnspan=2)
-
+        self.opt1 = ttk.Button(self, text="Submit anyway, and go for a drink to celebrate",
+                          command=lambda: self.option2(controller))
+        #  and put .grid() in a new line :)
+        self.opt1.grid(row=2, column=0)
+        
+        self.opt2 = ttk.Button(self, text="Email your professor and ask for an extension",
+                          command=lambda: self.option1(controller))
+        #  and put .grid() in a new line :)
+        self.opt2.grid(row=3, column=0)
+        
+        self.opt3 = ttk.Button(self, text="Upload an empty document",
+                          command=lambda: self.option3(controller))
+        #  and put .grid() in a new line :)
+        self.opt3.grid(row=4, column=0)
+        
+        self.opt4 = ttk.Button(self, text="Just submit late and pray professor won’t find out",
+                          command=lambda: self.option1(controller))
+        #  and put .grid() in a new line :)
+        self.opt4.grid(row=5, column=0)
+        
 
     def disable_buttons(self):
         self.opt1['state'] = tk.DISABLED
         self.opt2['state'] = tk.DISABLED
         self.opt3['state'] = tk.DISABLED
         self.opt4['state'] = tk.DISABLED
-
+        
     def option1(self, controller):
         self.disable_buttons()
-        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1a.png").resize((400, 200)))
-        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1b.png").resize((400, 200)))
+        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1a.png").resize((480, 270)))
+        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1b.png").resize((480, 270)))
         
         text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
         next_button = ttk.Button(self, text="Next",
@@ -342,8 +375,8 @@ class PageTwo(tk.Frame):
 
         if outcome == 0:
             text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
-            player.editMHealth(1, 0)
-            player.editAcad(1, 0)
+            player.editMHealth(-1, 1)
+            player.editAcad(-1, 1)
         else:
             text = tk.Label(self, image=self.img2).grid(row=7, column=0, columnspan=4)
             player.editMHealth(1, 1)
@@ -351,17 +384,39 @@ class PageTwo(tk.Frame):
             
     def option2(self, controller):
         self.disable_buttons()
-        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response2.png").resize((400, 200)))
+        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response2.png").resize((480, 270)))
         
         text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
         
         outcome = random.randint(0,9)
-        player.editAcad(2,0)
+        player.editAcad(-2,1)
         player.editMHealth(1,1)
-        player.editPHealth(1, 0)
-        plaer.editSL(1,1)   
+        player.editPHealth(-1, 1)
+        player.editSL(1,1)
+        
+    def option3(self, controller):
+        self.disable_buttons()
+        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response3a.png").resize((480, 270)))
+        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response3b.png").resize((480, 270)))
+        
+        text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
+        
+        outcome = random.randint(0,1)
+
+        if outcome == 0:
+            text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
+            player.editMHealth(1, 1)
+            player.editAcad(1, 1)
+            player.editPHealth(-1, 1)
+        else:
+            text = tk.Label(self, image=self.img2).grid(row=7, column=0, columnspan=4)
+            player.editMHealth(-1, 1)
+            player.editAcad(-2, 1)
+            player.editPHealth(-1, 1)
 
 class PageThree(tk.Frame):
 
@@ -606,17 +661,16 @@ class PageSix(tk.Frame):
                            command=lambda: controller.show_frame("PageOne"))
         button.pack()
 
-##class PageWarning(tk.Frame):
-##
-##    def __init__(self, parent, controller):
-##        tk.Frame.__init__(self, parent)
-##        self.controller = controller
-##        label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
-##        label.pack(side="top", fill="x", pady=10)
-##        button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage"))
-##        button.pack()
-            
+class PageGameover(tk.Frame):
+
+    def __init__(self, parent, controller, stat):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text=stat + " has fallen below 0", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = ttk.Button(self, text="Home",
+                           command=lambda: controller.show_frame("PageOne"))
+        button.pack()
 
 
 if __name__ == "__main__":
