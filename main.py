@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
+# a random comment
 
 class SampleApp(tk.Tk):
 
@@ -67,14 +68,14 @@ class PageOne(tk.Frame):
         money = tk.Label(stats_frame, text="Money:").pack(side="left")
 
         stats_frame.grid(row=0, column=0, columnspan=4)
-        
+
         label = tk.Label(self, text="Scenario 1 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
         #label.pack(side="top", fill="x", pady=10)
 
         self.img = ImageTk.PhotoImage(file="placeholder.png")
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0, columnspan=4)
-        
+
         opt1 = ttk.Button(self, text="Option 1").grid(row=3, column=0, columnspan=2)
         opt2 = ttk.Button(self, text="Option 2").grid(row=3, column=2, columnspan=2)
         opt3 = ttk.Button(self, text="Option 3").grid(row=4, column=0, columnspan=2)
