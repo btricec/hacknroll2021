@@ -15,6 +15,7 @@ import random
 ##play()
 
 gameover = "none"
+final = "none"
 
 class Player():
     def __init__(self, name, acad, p_health, social_life):
@@ -82,6 +83,16 @@ class Player():
             gameover = "Mental health"
         elif self.money < 1:
             gameover = "Money"
+    
+    def final(self):
+        global final
+        if max(self.acad,self.social_life,self.p_health) == self.acad:
+            final = "Academics"
+        elif max(self.acad,self.social_life,self.p_health)== self.social_life:
+            final = "Social life"
+        elif max(self.acad,self.social_life,self.p_health) == self.p_health:
+            final = "Physical health"
+
 
 player = Player("nil", 10, 10, 10)
 
@@ -109,6 +120,7 @@ class SampleApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
+        
         for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven, PageEight): 
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
@@ -150,6 +162,7 @@ class SampleApp(tk.Tk):
 
         '''Show a frame for the given page name'''
         player.gameOver()
+        
         if gameover != "none":
             frame = PageGameover(parent=self.container, controller=self)
             frame.grid(row=0, column=0, sticky="nsew")
@@ -623,8 +636,8 @@ Spent a day on the toilet!
         if outcome == 0:
             text = tk.Label(self, text="So hungry... Could not sleep\n Ending up binge eating D: \n -1 physical health, -1 mental health",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
-            player.MHealth(1, 0)
-            player.MHealth(1, 0)
+            player.editMHealth(1, 0)
+            player.editPHealth(1, 0)
         else:
             text = tk.Label(self, text="Can't feel hungry if you're sleeping! Woke up and had a good breakfast. \n - no changes -",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
@@ -960,8 +973,8 @@ class PageEight(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        button = ttk.Button(self, text="Home",
-                           command=lambda: controller.show_frame("PageOne"))
+        button = ttk.Button(self, text="See your score",
+                           command=lambda: controller.show_frame("Final"))
         button.pack()
 
 class PageGameover(tk.Frame):
@@ -992,7 +1005,39 @@ Manage your finances better!"""
         button = ttk.Button(self, text="Home",
                            command=lambda: controller.show_frame("PageStart"))
         button.pack()
-
+        
+def restart_program():
+    import sys
+    import os
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    
+class Final(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        academic = tk.Label(self, text="Best scholar", font=controller.title_font)
+        sport = tk.Label(self, text="Best atheletics", font=controller.title_font)
+        social = tk.Label(self, text="Best social", font=controller.title_font)
+        
+        score = tk.Label(self, text=str(final), font=controller.title_font)
+        
+        if final=="Academics":
+            academic.pack(side="top", fill="x", pady=10) 
+            
+        elif final=="Physical health":
+            sport.pack(side="top", fill="x", pady=10)
+            
+        elif final == "Social life":
+            social.pack(side="top", fill="x", pady=10)
+        
+        score.pack(side="top", fill="x", pady=10)
+        button = ttk.Button(self, text="Try again",
+                           command=restart_program)
+        button.pack() 
 
 if __name__ == "__main__":
     app = SampleApp()
