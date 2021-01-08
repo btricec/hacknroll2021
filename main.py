@@ -282,24 +282,114 @@ class PageTwo(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-##        label = tk.Label(self, text="Scenario 2 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
-
-        self.img = ImageTk.PhotoImage(file="placeholder.png")
+        label = tk.Label(self, text="Scenario 1 goes here ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
+        #label.pack(side="top", fill="x", pady=10)
+        
+        
+        self.img = ImageTk.PhotoImage(Image.open("ddl/ddl.png").resize((480, 270)))
         img_label = tk.Label(self, image=self.img)
-        img_label.grid(row=0, column=0)
+        img_label.grid(row=1, column=0, columnspan=4)
 
-        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=1, column=0)
-        opt2 = ttk.Button(self, text="Option 2").grid(row=2, column=0)
-        opt3 = ttk.Button(self, text="Option 3").grid(row=3, column=0)
-        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=0)
-##        home_button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
+        self.opt1 = ttk.Button(self, text="Submit anyway, and go for a drink to celebrate", command=lambda: self.option2(controller))
+        self.opt1.grid(row=3, column=0, columnspan=2)
+        self.opt2 = ttk.Button(self, text="Email your professor and ask for an extension", command=lambda: self.option1(controller))
+        self.opt2.grid(row=4, column=0, columnspan=2)
+        self.opt3 = ttk.Button(self, text="Upload an empty document", command=lambda: self.option1(controller))
+        self.opt3.grid(row=5, column=0, columnspan=2)
+        self.opt4 = ttk.Button(self, text="Just submit late and pray professor won’t find out", command=lambda: self.option1(controller))
+        self.opt4.grid(row=6, column=0, columnspan=2)
+
+    def disable_buttons(self):
+        self.opt1['state'] = tk.DISABLED
+        self.opt2['state'] = tk.DISABLED
+        self.opt3['state'] = tk.DISABLED
+        self.opt4['state'] = tk.DISABLED
 
     def option1(self, controller):
-        player.editPHealth(100, 1)
-        text = tk.Label(self, text="+100 health!").grid(row=5, column=0, columnspan=4)
+        self.disable_buttons()
+        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1a.png").resize((400, 200)))
+        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1b.png").resize((400, 200)))
+        
+        text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
         next_button = ttk.Button(self, text="Next",
-            command=lambda: controller.show_frame("PageThree")).grid(row=6, column=1, columnspan=2)
+            command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
+        
+        outcome = random.randint(0,1)
+
+        if outcome == 0:
+            text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
+            player.editmHealth(-1, 1)
+            player.editAcad(-1, 1)
+        else:
+            text = tk.Label(self, image=self.img2).grid(row=7, column=0, columnspan=4)
+            player.editmHealth(1, 1)
+            player.editAcad(1, 1)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageThree")).grid(row=8, column=0)
+            
+    def option2(self, controller):
+        self.disable_buttons()
+        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response2.png").resize((400, 200)))
+        
+        text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
+        
+        outcome = random.randint(0,9)
+        player.editAcad(-2,1)
+        player.editmHealth(1,1)
+        player.editPHealth(-1, 1)
+        plaer.editSL(1,1)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageThree")).grid(row=9, column=0)
+
+##class PageTwo(tk.Frame):
+##
+##    def __init__(self, parent, controller):
+##        tk.Frame.__init__(self, parent)
+##        self.controller = controller
+##
+##        self.img = ImageTk.PhotoImage(file="orientation.png")
+##        img_label = tk.Label(self, image=self.img)
+##        img_label.grid(row=0, column=0)
+##
+##        # make all buttons an attribute of the class (i.e. self.opt1)
+##        self.opt1 = ttk.Button(self, text="Go Clubbing! WOOHOO ♪┏(・o･)┛♪",
+##                          command=lambda: self.option1(controller))
+##        #  and put .grid() in a new line :)
+##        self.opt1.grid(row=1, column=0)
+##        self.opt2 = ttk.Button(self, text="Camp was tiring, go home and sleep",
+##                          command=lambda: self.option2(controller))
+##        self.opt2.grid(row=2, column=0)
+##        self.opt3 = ttk.Button(self, text="School is starting, need to study!!",
+##                          command=lambda: self.option3(controller))
+##        self.opt3.grid(row=3, column=0)
+##        self.opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
+##                          command=lambda: self.option4(controller))
+##        self.opt4.grid(row=4, column=0)
+####        home_button = ttk.Button(self, text="Home",
+####                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
+##
+##    # makes sure plaer cannot choose another option after pressing a button
+##    def disable_buttons(self):
+##        self.opt1['state'] = tk.DISABLED
+##        self.opt2['state'] = tk.DISABLED
+##        self.opt3['state'] = tk.DISABLED
+##        self.opt4['state'] = tk.DISABLED
+##
+##    def option1(self, controller):
+##
+##
+##    def option2(self, controller):
+##
+##
+##    def option3(self, controller):
+##
+##
+##    def option4(self, controller):
+        
 
 class PageThree(tk.Frame):
 
