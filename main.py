@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
 import pygame
@@ -53,7 +54,21 @@ class Player():
         else:
             self.money -= value
 
-player = Player("nil", 0, 0, 0)
+    def warning(self):
+        warnings = []
+        if self.acad < 3:
+            warnings.append("academics")
+        if self.social_life < 3:
+            warnings.append("social life")
+        if self.p_health < 3:
+            warnings.append("physical health")
+        if self.m_health < 3:
+            warnings.append("mental health")
+        if self.money < 3:
+            warnings.append("money")
+        return warnings
+
+player = Player("nil", 10, 10, 10)
 
 
 class SampleApp(tk.Tk):
@@ -91,6 +106,16 @@ class SampleApp(tk.Tk):
 
         self.show_frame("StartPage")
 
+    def doChecks(self):
+        warnings = player.warning()
+        if len(warnings) == 1:
+            messagebox.showwarning("WARNING!", warnings[0] + " has fallen below 3!")
+        elif len(warnings) > 1:
+            string = ""
+            for i in warnings:
+                string += (i + " and ")
+            messagebox.showwarning("WARNING!", string + "has fallen below 3!")
+
     def show_frame(self, page_name):
         # update stats
 
@@ -106,6 +131,7 @@ class SampleApp(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
+        self.doChecks()
 
 
 class StartPage(tk.Frame):
@@ -144,7 +170,7 @@ class StartPage(tk.Frame):
 
     def snakeMaster(self, name, controller):
         global player
-        player = Player(name, 9, 5, 6)
+        player = Player(name, 9, 5, 3)
         text = tk.Label(self, text="Hello " + name + " you have chosen Snake Master!", padx=40).grid(row=4, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
@@ -458,6 +484,18 @@ class PageFour(tk.Frame):
         button = ttk.Button(self, text="Home",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
+
+
+##class PageWarning(tk.Frame):
+##
+##    def __init__(self, parent, controller):
+##        tk.Frame.__init__(self, parent)
+##        self.controller = controller
+##        label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
+##        label.pack(side="top", fill="x", pady=10)
+##        button = ttk.Button(self, text="Home",
+##                           command=lambda: controller.show_frame("StartPage"))
+##        button.pack()
             
 
 
