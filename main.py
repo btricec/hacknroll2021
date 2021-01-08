@@ -14,6 +14,8 @@ import random
 ##
 ##play()
 
+gameover = "none"
+
 class Player():
     def __init__(self, name, acad, p_health, social_life):
         self.name = name
@@ -69,17 +71,17 @@ class Player():
         return warnings
 
     def gameOver(self):
+        global gameover
         if self.acad < 1:
-            return "Academics"
-        if self.social_life < 1:
-            return "Social life"
-        if self.p_health < 1:
-            return "Physical health"
-        if self.m_health < 1:
-            return "Mental health"
-        if self.money < 1:
-            return "Money"
-        return "none"
+            gameover = "Academics"
+        elif self.social_life < 1:
+            gameover = "Social life"
+        elif self.p_health < 1:
+            gameover = "Physical health"
+        elif self.m_health < 1:
+            gameover = "Mental health"
+        elif self.money < 1:
+            gameover = "Money"
 
 player = Player("nil", 10, 10, 10)
 
@@ -107,7 +109,7 @@ class SampleApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven): #, PageGameover):
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
@@ -120,11 +122,11 @@ class SampleApp(tk.Tk):
         self.show_frame("StartPage")
 
     def doChecks(self):
-        end = player.gameOver()
-        if end != "none":
-            frame = PageGameover(parent=self.container, controller=self, stat=end)
-            frame.tkraise()
-            return
+##        end = player.gameOver()
+##        if end != None:
+##            frame = PageGameover(parent=self.container, controller=self, stat=end)
+##            frame.tkraise()
+##            return
 
         warnings = player.warning()
         if len(warnings) == 1:
@@ -147,10 +149,15 @@ class SampleApp(tk.Tk):
         stats_frame.place(x=0, y=0)
 
         '''Show a frame for the given page name'''
-        frame = self.frames[page_name]
-        frame.tkraise()
-
-        self.doChecks()
+        player.gameOver()
+        if gameover != "none":
+            frame = PageGameover(parent=self.container, controller=self)
+            frame.grid(row=0, column=0, sticky="nsew")
+            frame.tkraise()
+        else:
+            frame = self.frames[page_name]
+            frame.tkraise()
+            self.doChecks()
 
 
 class StartPage(tk.Frame):
@@ -391,7 +398,7 @@ class PageTwo(tk.Frame):
             command=lambda: controller.show_frame("PageThree")).grid(row=8, column=1, columnspan=2)
 
         outcome = random.randint(0,9)
-        player.editAcad(-2,1)
+        player.editAcad(-5,1)
         player.editMHealth(1,1)
         player.editPHealth(-1, 1)
         player.editSL(1,1)
@@ -845,13 +852,31 @@ class PageSeven(tk.Frame):
 
 class PageGameover(tk.Frame):
 
-    def __init__(self, parent, controller, stat):
+    def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text=stat + " has fallen below 0", font=controller.title_font)
+        go_label = tk.Label(self, text="Gameover ༼ ༎ຶ ෴ ༎ຶ༽", font=controller.title_font)
+        go_label.pack(side="top", fill="x", pady=10)
+        label = tk.Label(self, text=gameover + " has fallen below 0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+        if gameover == "Academics":
+            text = """With your current grades, there is no way you will be able to pass this semester.
+Best to turn over a new leaf and study harder!"""
+        elif gameover == "Social Life":
+            text = "We can relate."
+        elif gameover == "Physical Health":
+            text = "Due to ailing health, you have taken a Leave of Absence and will not be finishing the semester."
+        elif gameover == "Mental Health":
+            text = """Due to a mental breakdown in school, you have been required to take a Leave of Absence and attned couseling
+The school hopes that you will be able to return in a better state next semester."""
+        elif gameover == "Money":
+            text = """University is expensive!
+You do not have enough funds to pay your school fees next semester. This is the start of student debt.
+Manage your finances better!"""
+        label2 = tk.Label(self, text=text, font=controller.title_font)
+        label2.pack(side="top", fill="x", pady=10)
         button = ttk.Button(self, text="Home",
-                           command=lambda: controller.show_frame("PageOne"))
+                           command=lambda: controller.show_frame("PageStart"))
         button.pack()
 
 
