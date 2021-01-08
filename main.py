@@ -55,6 +55,7 @@ class Player():
 
 player = Player("nil", 0, 0, 0)
 
+
 class SampleApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -178,18 +179,33 @@ class PageOne(tk.Frame):
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
-        opt1 = ttk.Button(self, text="Go Clubbing! WOOHOO ♪┏(・o･)┛♪",
-                          command=lambda: self.option1(controller)).grid(row=1, column=0)
-        opt2 = ttk.Button(self, text="Camp was tiring, go home and sleep",
-                          command=lambda: self.option2(controller)).grid(row=2, column=0)
-        opt3 = ttk.Button(self, text="School is starting, need to study!!",
-                          command=lambda: self.option1(controller)).grid(row=3, column=0)
-        opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
-                          command=lambda: self.option1(controller)).grid(row=4, column=0)
+        # make all buttons an attribute of the class (i.e. self.opt1)
+        self.opt1 = ttk.Button(self, text="Go Clubbing! WOOHOO ♪┏(・o･)┛♪",
+                          command=lambda: self.option1(controller))
+        #  and put .grid() in a new line :)
+        self.opt1.grid(row=1, column=0)
+        self.opt2 = ttk.Button(self, text="Camp was tiring, go home and sleep",
+                          command=lambda: self.option2(controller))
+        self.opt2.grid(row=2, column=0)
+        self.opt3 = ttk.Button(self, text="School is starting, need to study!!",
+                          command=lambda: self.option1(controller))
+        self.opt3.grid(row=3, column=0)
+        self.opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
+                          command=lambda: self.option1(controller))
+        self.opt4.grid(row=4, column=0)
 ##        home_button = ttk.Button(self, text="Home",
 ##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
+    # makes sure plaer cannot choose another option after pressing a button
+    def disable_buttons(self):
+        self.opt1['state'] = tk.DISABLED
+        self.opt2['state'] = tk.DISABLED
+        self.opt3['state'] = tk.DISABLED
+        self.opt4['state'] = tk.DISABLED
+
     def option1(self, controller):
+        self.disable_buttons()
+        
         # 1/2 chance to get bad outcome
         outcome = random.randint(0,1)
 
@@ -208,6 +224,8 @@ class PageOne(tk.Frame):
             command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
 
     def option2(self, controller):
+        self.disable_buttons()
+        
         # 1/10 chace to get a bad outcome
         outcome = random.randint(0,9)
 
@@ -218,6 +236,9 @@ class PageOne(tk.Frame):
             text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
             player.editPHealth(1, 1)
+
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
 
 class PageTwo(tk.Frame):
 
@@ -234,7 +255,7 @@ class PageTwo(tk.Frame):
         opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=1, column=0)
         opt2 = ttk.Button(self, text="Option 2").grid(row=2, column=0)
         opt3 = ttk.Button(self, text="Option 3").grid(row=3, column=0)
-        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2)
+        opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=0)
 ##        home_button = ttk.Button(self, text="Home",
 ##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
