@@ -2,6 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
+import pygame
+
+pygame.mixer.init()
+
+def play():
+    pygame.mixer.music.load("song.mp3")
+    pygame.mixer.music.play(loops = 2)
+
+play()
 
 class Player():
     def __init__(self, name, acad, p_health, social_life):
@@ -82,7 +91,7 @@ class SampleApp(tk.Tk):
 
     def show_frame(self, page_name):
         # update stats
-        
+
         stats_frame = tk.Frame(self)
         phy_health = tk.Label(stats_frame, text="Physical Health:" + str(player.p_health), padx=20).pack(side="left")
         mental_health = tk.Label(stats_frame, text="Mental Health:" + str(player.m_health), padx=20).pack(side="left")
@@ -91,7 +100,7 @@ class SampleApp(tk.Tk):
         money = tk.Label(stats_frame, text="Money:" + str(player.money), padx=20).pack(side="left")
 
         stats_frame.place(x=0, y=0)
-        
+
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
@@ -108,7 +117,7 @@ class StartPage(tk.Frame):
         name_label = tk.Label(self, text="Enter your name: ").grid(row=1, column=0)
         name = tk.Entry(self)
         name.grid(row=1, column=1)
-        
+
 ##        self.img = ImageTk.PhotoImage(file="characters.png")
 ##        img_label = ttk.Label(self, image=self.img)
 ##        img_label.pack()
