@@ -169,18 +169,18 @@ class PageOne(tk.Frame):
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0, columnspan=4)
 
-        opt1 = ttk.Button(self, text="Option 1", command=self.option1).grid(row=3, column=0, columnspan=2)
+        opt1 = ttk.Button(self, text="Option 1", command=lambda: self.option1(controller)).grid(row=3, column=0, columnspan=2)
         opt2 = ttk.Button(self, text="Option 2").grid(row=3, column=2, columnspan=2)
         opt3 = ttk.Button(self, text="Option 3").grid(row=4, column=0, columnspan=2)
         opt4 = ttk.Button(self, text="Option 4").grid(row=4, column=2, columnspan=2)
-        home_button = ttk.Button(self, text="Home",
-                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
-        next_button = ttk.Button(self, text="Next",
-                                command=lambda: controller.show_frame("PageTwo")).grid(row=5, column=2)
+##        home_button = ttk.Button(self, text="Home",
+##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
-    def option1(self):
+    def option1(self, controller):
         player.editPHealth(100, 1)
-        text = tk.Label(self, text="+100 health!").grid(row=6, column=0, columnspan=2)
+        text = tk.Label(self, text="+100 health!").grid(row=5, column=0, columnspan=4)
+        next_button = ttk.Button(self, text="Next",
+            command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=1, columnspan=2)
 
 class PageTwo(tk.Frame):
 
