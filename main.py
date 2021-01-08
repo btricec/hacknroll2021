@@ -109,7 +109,7 @@ class SampleApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven, PageEight): 
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix, PageSeven, PageEight):
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
@@ -623,8 +623,8 @@ Spent a day on the toilet!
         if outcome == 0:
             text = tk.Label(self, text="So hungry... Could not sleep\n Ending up binge eating D: \n -1 physical health, -1 mental health",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
-            player.MHealth(1, 0)
-            player.MHealth(1, 0)
+            player.editMHealth(1, 0)
+            player.editPHealth(1, 0)
         else:
             text = tk.Label(self, text="Can't feel hungry if you're sleeping! Woke up and had a good breakfast. \n - no changes -",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
@@ -885,7 +885,7 @@ class PageSeven(tk.Frame):
             player.editAcad(4, 1)
         else:
             text = tk.Label(self, text="""Quiz answers were all so similar, you and your friends got caught for cheating and given an F grade
-At least you all failed together? 
+At least you all failed together?
 -4 academics, +1 social life, -1 mental health""",
                             font=controller.title_font, wraplength=1000).grid(row=5, column=0)
             player.editSL(1, 1)
