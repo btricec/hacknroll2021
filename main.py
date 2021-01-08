@@ -60,11 +60,11 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         stats_frame = tk.Frame(self)
-        phy_health = tk.Label(stats_frame, text="Physical Health:").pack(side="left")
-        mental_health = tk.Label(stats_frame, text="Mental Health:").pack(side="left")
-        social_life = tk.Label(stats_frame, text="Social Life:").pack(side="left")
-        acad = tk.Label(stats_frame, text="Academics:").pack(side="left")
-        money = tk.Label(stats_frame, text="Money:").pack(side="left")
+        phy_health = tk.Label(stats_frame, text="Physical Health:", padx=20).pack(side="left")
+        mental_health = tk.Label(stats_frame, text="Mental Health:", padx=20).pack(side="left")
+        social_life = tk.Label(stats_frame, text="Social Life:", padx=20).pack(side="left")
+        acad = tk.Label(stats_frame, text="Academics:", padx=20).pack(side="left")
+        money = tk.Label(stats_frame, text="Money:", padx=20).pack(side="left")
 
         stats_frame.grid(row=0, column=0, columnspan=4)
 
