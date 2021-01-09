@@ -188,7 +188,7 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = ttk.Label(self, text="Are you ready for your first semester of college??", font=controller.title_font)
+        label = ttk.Label(self, text="Are you ready for your first semester of university?", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2)
 
         name_label = tk.Label(self, text="Enter your name and choose an avatar to start ").grid(row=1, column=0)
