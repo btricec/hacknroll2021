@@ -769,7 +769,7 @@ Your friend is understanding, but seems to be a little hurt by your delayed resp
         self.disable_buttons()
 
         text = tk.Label(self, text="""Not a terrible choice given the circumstances!
-In all  honestly, though, as much as we sympathise... That's a bit of a jerk move from you
+In all honesty, though, as much as we sympathise... That's a bit of a jerk move from you
 -3 social life, +1 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
         player.editAcad(1, 1)
@@ -1097,6 +1097,8 @@ You have made it to the Dean's List!
 
 if __name__ == "__main__":
     app = SampleApp()
+    app.title("Can you survive your first sem?")
+    app.iconbitmap("icon.ico")
     app.geometry("600x1000")
     app.mainloop()
 
