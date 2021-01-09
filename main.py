@@ -260,7 +260,7 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("orientation.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/orientation.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
@@ -372,7 +372,7 @@ class PageTwo(tk.Frame):
         self.controller = controller
 
 
-        self.img = ImageTk.PhotoImage(Image.open("ddl/ddl.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/ddl/ddl.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0)
 
@@ -405,8 +405,8 @@ class PageTwo(tk.Frame):
 
     def option1(self, controller):
         self.disable_buttons()
-        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1a.png").resize((320, 180)))
-        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response1b.png").resize((320, 180)))
+        self.img1 = ImageTk.PhotoImage(Image.open("pic/ddl/ddl_response1a.png").resize((320, 180)))
+        self.img2 = ImageTk.PhotoImage(Image.open("pic/ddl/ddl_response1b.png").resize((320, 180)))
 
         text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
         next_button = ttk.Button(self, text="Next",
@@ -425,7 +425,7 @@ class PageTwo(tk.Frame):
 
     def option2(self, controller):
         self.disable_buttons()
-        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response2.png").resize((320, 180)))
+        self.img1 = ImageTk.PhotoImage(Image.open("pic/ddl/ddl_response2.png").resize((320, 180)))
 
         text = tk.Label(self, image=self.img1).grid(row=7, column=0)
         next_button = ttk.Button(self, text="Next",
@@ -439,8 +439,8 @@ class PageTwo(tk.Frame):
 
     def option3(self, controller):
         self.disable_buttons()
-        self.img1 = ImageTk.PhotoImage(Image.open("ddl/ddl_response3a.png").resize((320, 180)))
-        self.img2 = ImageTk.PhotoImage(Image.open("ddl/ddl_response3b.png").resize((320, 180)))
+        self.img1 = ImageTk.PhotoImage(Image.open("pic/ddl/ddl_response3a.png").resize((320, 180)))
+        self.img2 = ImageTk.PhotoImage(Image.open("pic/ddl/ddl_response3b.png").resize((320, 180)))
 
         text = tk.Label(self, image=self.img1).grid(row=7, column=0, columnspan=4)
         next_button = ttk.Button(self, text="Next",
@@ -466,7 +466,7 @@ class PageThree(tk.Frame):
          tk.Frame.__init__(self, parent)
          self.controller = controller
 
-         self.img = ImageTk.PhotoImage(Image.open("decision.jpeg").resize((580, 276)))
+         self.img = ImageTk.PhotoImage(Image.open("pic/decision.jpeg").resize((580, 276)))
          img_label = tk.Label(self, image=self.img)
          img_label.grid(row=0, column=0)
 
@@ -584,7 +584,7 @@ class PageFour(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("snack.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/snack.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
@@ -701,7 +701,7 @@ class PageFive(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("quiz.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/quiz.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
@@ -804,7 +804,7 @@ class PageSix(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
     
-        self.img = ImageTk.PhotoImage(Image.open("sick/sick.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/sick.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0)
 
@@ -917,7 +917,7 @@ class PageSeven(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("online_exam.png").resize((580, 276)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/online_exam.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
@@ -1029,7 +1029,7 @@ class PageEight(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("congrat.jpeg").resize((580, 376)))
+        self.img = ImageTk.PhotoImage(Image.open("pic/congrat.jpeg").resize((580, 376)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
