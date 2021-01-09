@@ -1097,6 +1097,8 @@ You have made it to the Dean's List!
 
 if __name__ == "__main__":
     app = SampleApp()
+    app.title("Can you survive your first sem?")
+    app.iconbitmap("icon.ico")
     app.geometry("600x1000")
     app.mainloop()
 
