@@ -270,8 +270,6 @@ class PageOne(tk.Frame):
         self.opt4 = ttk.Button(self, text="Was that a prof you saw?? Go stalk him ☉ ‿ ⚆",
                           command=lambda: self.option4(controller))
         self.opt4.grid(row=4, column=0)
-##        home_button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
     # makes sure plaer cannot choose another option after pressing a button
     def disable_buttons(self):
@@ -287,14 +285,14 @@ class PageOne(tk.Frame):
         outcome = random.randint(0,1)
 
         if outcome == 0:
-            text = tk.Label(self, text="You had a great time dancing and drinking with your friends :D \n +1 social life, -2 money",
+            text = tk.Label(self, text="You had a great time dancing and drinking with your friends :D \n +2 social life, -3 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 1)
-            player.editMoney(2, 0)
+            player.editSL(2, 1)
+            player.editMoney(3, 0)
         else:
-            text = tk.Label(self, text="You got drunk and puked all over your friend (ew gross) \n -1 social life, -2 money",
+            text = tk.Label(self, text="You got drunk and puked all over your friend (ew gross) \n -2 social life, -2 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 0)
+            player.editSL(2, 0)
             player.editMoney(2, 0)
 
         next_button = ttk.Button(self, text="Next",
@@ -303,14 +301,16 @@ class PageOne(tk.Frame):
     def option2(self, controller):
         self.disable_buttons()
 
-        # 1/10 chace to get a bad outcome
-        outcome = random.randint(0,9)
+        # 1/3 chace to get a bad outcome
+        outcome = random.randint(0,2)
 
         if outcome == 0:
-            text = tk.Label(self, text="You fell asleep on the bus ride and missed your stop! \n - no changes -",
+            text = tk.Label(self, text="""You fell asleep on the bus ride and missed your stop!
+No more public transport so you had to grab home
+-2 money""",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
         else:
-            text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health",
+            text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health, +1 physical health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editPHealth(1, 1)
 
@@ -320,16 +320,16 @@ class PageOne(tk.Frame):
     def option3(self, controller):
         self.disable_buttons()
 
-        # 1/4 chace to get a bad outcome
-        outcome = random.randint(0,4)
+        # 1/3 chace to get a bad outcome
+        outcome = random.randint(0,2)
 
         if outcome == 0:
-            text = tk.Label(self, text="Feeling stressed and overworked even before school starts! \n +2 academics, -1 mental health",
+            text = tk.Label(self, text="Feeling stressed and overworked even before school starts \n +2 academics, -2 mental health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editMHealth(1, 0)
             player.editAcad(2, 1)
         else:
-            text = tk.Label(self, text="Feeling prepared for the new semester! ᕙ(`▽´)ᕗ \n +1 academics",
+            text = tk.Label(self, text="Feeling prepared for the new semester! ᕙ(`▽´)ᕗ \n +2 academics",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
 
         next_button = ttk.Button(self, text="Next",
@@ -340,12 +340,13 @@ class PageOne(tk.Frame):
 
         # good social skills,
         if player.social_life >= 8:
-            text = tk.Label(self, text="Thanks to your great social skills, you and prof are now good friends~ \n +1 social life, +1 academics",
+            text = tk.Label(self, text="""Thanks to your great social skills, you and prof are now good friends~
++1 social life, +2 academics""",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(1, 1)
             player.editAcad(1, 1)
         else:
-            text = tk.Label(self, text="People think you're slightly weird :( \n -1 social life, -1 mental health",
+            text = tk.Label(self, text="People think you're slightly weird :( \n -2 social life, -2 mental health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editMHealth(1, 0)
             player.editSL(1, 0)
@@ -360,9 +361,6 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
-        label = tk.Label(self, text="Scenario 1 goes here ", font=controller.title_font).grid(row=1, column=0)
-        #label.pack(side="top", fill="x", pady=10)
 
 
         self.img = ImageTk.PhotoImage(Image.open("ddl/ddl.png").resize((580, 276)))
@@ -384,7 +382,7 @@ class PageTwo(tk.Frame):
         #  and put .grid() in a new line :)
         self.opt3.grid(row=4, column=0)
 
-        self.opt4 = ttk.Button(self, text="Just submit late and pray professor won’t find out",
+        self.opt4 = ttk.Button(self, text="Just submit late and pray professor doesn’t find out",
                           command=lambda: self.option1(controller))
         #  and put .grid() in a new line :)
         self.opt4.grid(row=5, column=0)
@@ -487,10 +485,11 @@ class PageThree(tk.Frame):
     def option1(self, controller):
          self.disable_buttons()
 
-         text = tk.Label(self, text="You are very prepared for next week's quiz, but you are feeling a little lonely \n +1 academics, -1 social life",
+         text = tk.Label(self, text="You are very prepared for next week's quiz, but you are feeling a little lonely \n +1 academics, -1 social life, -1 mental health",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
          player.editSL(1, 0)
          player.editAcad(1, 1)
+         player.editMHealth(1, 0)
 
          next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -502,14 +501,18 @@ class PageThree(tk.Frame):
         outcome = random.randint(0,3)
 
         if outcome == 0:
-            text = tk.Label(self, text="You had some fun, but now you are worried that you'll do poorly \n on Monday's quiz \n +1 social life, -2 academics",
+            text = tk.Label(self, text="""You had some fun, but now you are worried that you'll do poorly on Monday's quiz (´･_･`)
++1 social life, -2 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editAcad(2, 0)
             player.editSL(1, 1)
         else:
-            text = tk.Label(self, text="You had a lot of fun, and there is still plenty of time to\n catch up on school work on Sunday \n +2 social life",
+            text = tk.Label(self, text="""You had a lot of fun, and there is still plenty of time to catch up on school work on Sunday
+But managing social life and academics is hard! Feeling slightly overworked.
++2 social life -1 physical health""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 1)
+            player.editPHealth(1, 0)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -517,13 +520,23 @@ class PageThree(tk.Frame):
     def option3(self, controller):
         self.disable_buttons()
 
-        text = tk.Label(self, text="You have a stomachace from all the BBT, you are broke and you haven't revised at all \n Oddly, however, you managed to win a couple of rounds and even made a new  friend in the process \n -2 physical health, -3 money, -1 academics, +1 social life, +2 mental health",
+        # 1/4 chance to get a bad outcome
+        outcome = random.randint(0, 3)
+
+        if outcome == 0:
+            text = tk.Label(self, text="""Lost all your money gambling... (ಥ⌣ಥ)""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editSL(1, 1)
-        player.editMoney(3, 0)
-        player.editPHealth(2, 0)
-        player.editMHealth(2, 1)
-        player.editAcad(1,0)
+            player.editMoney(player.money, 0)
+        else:
+            text = tk.Label(self, text="""You have a stomachace from all the BBT, you are broke and you haven't revised at all
+    Luckily you haven't lost all your money and even made a new  friend in the process
+    -2 physical health, -3 money, -1 academics, +1 social life, +2 mental health""",
+                                 font=controller.title_font, wraplength=580).grid(row=5, column=0)
+            player.editSL(1, 1)
+            player.editMoney(3, 0)
+            player.editPHealth(2, 0)
+            player.editMHealth(2, 1)
+            player.editAcad(1,0)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -535,13 +548,20 @@ class PageThree(tk.Frame):
         outcome = random.randint(0,1)
 
         if outcome == 0:
-            text = tk.Label(self, text= "You had a good time. Your parents showered you with affection \n and your siblings already envy your awesome college experience \n +1 mental health",
+            text = tk.Label(self, text= """You had a good time. Your parents showered you with affection and your siblings already envy your awesome college experience
+Also received some pocket money “ヽ(´▽｀)ノ”
++2 mental health, +2 money""",
             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editMHealth(1, 1)
+            player.editMHealth(2, 1)
+            player.editMoney(2, 1)
         else:
-            text = tk.Label(self, text="You hung out with your relatives and even took your dog to the park. Fun! \n +1 physical health",
+            text = tk.Label(self, text="""You hung out with your relatives and even took your dog to the park. Fun!
+But you forgot to study for your quiz on Monday... (._.) 
++1 physical health, +1 mental health, -1 academics""",
             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editPHealth(1, 1)
+            player.editMHealth(1, 0)
+            player.editAcad(1, 0)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -583,21 +603,25 @@ class PageFour(tk.Frame):
     def option1(self, controller):
         self.disable_buttons()
 
+        # 1/3 chance for each option
         outcome = random.randint(0,2)
 
         if outcome == 0:
-            text = tk.Label(self, text="Found a tub of Ben and Jerry's ice cream in the fridge, score!! \n -1 physical health ",
+            text = tk.Label(self, text="""Found a tub of Ben and Jerry's ice cream in the fridge, score!!
+Now you have energy to burn midnight oil.
+-1 physical health, +1 mental health, +1 academics """,
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editMHealth(1, 0)
-            player.editAcad(2, 1)
+            player.editMHealth(1, 1)
+            player.editPHealth(1, 0)
+            player.editAcad(1, 1)
         elif outcome == 1:
             text = tk.Label(self, text="""Found a packet of Indomie on the counter!
 While cooking it, Indomie owner walks in and catches you in the act ヽ(`Д´)ﾉ
 Now you are known as the resident food theif...
--1 social life, -1 mental health """,
+-2 social life, -2 mental health """,
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 0)
-            player.editPHealth(1, 0)
+            player.editSL(2, 0)
+            player.editPHealth(2, 0)
         else:
             text = tk.Label(self, text="""Found some yogurt and a banana!
 Yogurt tasted a bit funny... Turned out to be expired (≧︿≦)
@@ -613,9 +637,9 @@ Spent a day on the toilet!
     def option2(self, controller):
         self.disable_buttons()
 
-        text = tk.Label(self, text="Stomach is happy, wallet is not\n -2 money ",
+        text = tk.Label(self, text="Stomach is happy, wallet is not\n -3 money ",
                         font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editMoney(2, 0)
+        player.editMoney(3, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
@@ -627,15 +651,15 @@ Spent a day on the toilet!
         outcome = random.randint(0,2)
 
         if outcome == 0:
-            text = tk.Label(self, text="None of your friends wanted to eat supper with you... \n -1 social life, -1 mental health",
+            text = tk.Label(self, text="None of your friends wanted to eat supper with you... \n -2 social life, -2 mental health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 0)
-            player.editMHealth(1, 0)
+            player.editSL(2, 0)
+            player.editMHealth(2, 0)
         else:
-            text = tk.Label(self, text="Prata and cheese fries... YUM \n +1 social life, -1 money",
+            text = tk.Label(self, text="Prata and cheese fries... YUM \n +1 social life, -2 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(1, 1)
-            player.editMoney(1, 0)
+            player.editMoney(2, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
@@ -644,18 +668,18 @@ Spent a day on the toilet!
     def option4(self, controller):
         self.disable_buttons()
 
-        # 1/4 chance to get bad outcome
-        outcome = random.randint(0,3)
+        # 1/2 chance to get bad outcome
+        outcome = random.randint(0,1)
 
         if outcome == 0:
-            text = tk.Label(self, text="So hungry... Could not sleep\n Ending up binge eating D: \n -1 physical health, -1 mental health",
+            text = tk.Label(self, text="So hungry... Could not sleep\n Ending up binge eating D: \n -2 physical health, -2 mental health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editMHealth(1, 0)
-            player.editPHealth(1, 0)
+            player.editMHealth(2, 0)
+            player.editPHealth(2, 0)
         else:
-            text = tk.Label(self, text="Can't feel hungry if you're sleeping! Woke up and had a good breakfast. \n - no changes -",
+            text = tk.Label(self, text="Can't feel hungry if you're sleeping! Woke up and had a good breakfast. \n +1 physical health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-
+            player.editPHealth(1, 1)
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
 
@@ -701,15 +725,20 @@ class PageFive(tk.Frame):
         outcome = random.randint(0,1)
 
         if outcome == 1:
-            text = tk.Label(self, text="You are a very good friend. Your friend feels a lot better now, and you feel good for helping too. \n The quiz doesn't go that well though \n +1 social life, -1 academics",
+            text = tk.Label(self, text="""You are a very good friend. Your friend feels a lot better now, and you feel good for helping too.
+The quiz doesn't go that well though
++2 social life, -2 academics""",
                          font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 1)
-            player.editAcad(1, 0)
+            player.editSL(2, 1)
+            player.editAcad(2, 0)
 
         else:
-            text = tk.Label(self, text="You are a very good friend. Your friend feels a lot better now, and you feel good for helping too. \n The quiz turns out to be quite easy, so you still score well anyway :) \n +1 social life",
+            text = tk.Label(self, text="""You are a very good friend. Your friend feels a lot better now, and you feel good for helping too.
+The quiz turns out to be quite easy, so you still score well anyway :)
++2 social life, +2 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(1, 1)
+            player.editAcad(2, 1)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
@@ -718,7 +747,9 @@ class PageFive(tk.Frame):
     def option2(self, controller):
         self.disable_buttons()
 
-        text = tk.Label(self, text="You finish revising and do well on your quiz \nYour friend is understanding, but seems to be a little hurt by your delayed response \n+1 academics, -2 social life",
+        text = tk.Label(self, text="""You finish revising and do well on your quiz
+Your friend is understanding, but seems to be a little hurt by your delayed response
++1 academics, -2 social life""",
         font=controller.title_font, wraplength=580).grid(row=5, column=0)
         player.editAcad(1, 1)
         player.editSL(2, 0)
@@ -729,10 +760,12 @@ class PageFive(tk.Frame):
     def option3(self, controller):
         self.disable_buttons()
 
-        text = tk.Label(self, text="Not a terrible choice given the circumstances! \nIn all  honestly, though, as much as we sympathise... That's a bit of a jerk move from you  \n -1 social life, -1 academics",
+        text = tk.Label(self, text="""Not a terrible choice given the circumstances!
+In all  honestly, though, as much as we sympathise... That's a bit of a jerk move from you
+-3 social life, +1 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editAcad(1, 0)
-        player.editSL(1, 0)
+        player.editAcad(1, 1)
+        player.editSL(3, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
@@ -744,14 +777,15 @@ class PageFive(tk.Frame):
         outcome = random.randint(0,1)
 
         if outcome == 0:
-            text = tk.Label(self, text= "You are terrible at multitasking. Your friend is a little hurt that \n you didn't give them enough attention, and you weren't able to study much either \n -1  social life, -1 academics",
+            text = tk.Label(self, text= """You are terrible at multitasking. Your friend is a little hurt that you didn't give them enough attention, and you weren't able to study much either
+-2  social life, -1 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 0)
+            player.editSL(2, 0)
             player.editAcad(1,0)
         else:
-            text = tk.Label(self, text="Oddly, this kind of worked out (?) \n no change",
+            text = tk.Label(self, text="Oddly, this kind of worked out (?) \n +1 academics",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-
+            player.editAcad(1, 0)
         next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
 
@@ -761,9 +795,7 @@ class PageSix(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
-        #label = tk.Label(self, text="It is the last day of your orientation camp! ", font=controller.title_font).grid(row=1, column=0, columnspan=4)
-
+    
         self.img = ImageTk.PhotoImage(Image.open("sick/sick.png").resize((580, 276)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=1, column=0)
@@ -773,7 +805,7 @@ class PageSix(tk.Frame):
                           command=lambda: self.option1(controller))
         self.opt1.grid(row=2, column=0)
 
-        self.opt2 = ttk.Button(self, text="Email the professor using your last energy, and go to the hospital ",
+        self.opt2 = ttk.Button(self, text="Email the professor using your last energy, and go to UHC ",
                           command=lambda: self.option2(controller))
         #  and put .grid() in a new line :)
         self.opt2.grid(row=3, column=0)
@@ -799,10 +831,13 @@ class PageSix(tk.Frame):
 
         # 1/2 chance to get bad outcome
 
-        text = tk.Label(self, text="It is COVID time. You NEVER go to class when you are sick!!!! \n -2 physical life, -1 mental health",
+        text = tk.Label(self, text="""It is COVID time. You NEVER go to class when you are sick!!!!
+-2 physical health, -1 mental health, -1 social life, -1 academics""",
                         font=controller.title_font, wraplength=580).grid(row=6, column=0)
         player.editMHealth(-1, 1)
         player.editPHealth(-2, 1)
+        player.editSL(1, 0)
+        player.editAcad(1, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageSeven")).grid(row=7, column=0)
@@ -811,9 +846,10 @@ class PageSix(tk.Frame):
         self.disable_buttons()
 
         # 1/10 chace to get a bad outcome
-        text = tk.Label(self, text="It is obviously what human being do when they are sick. Good job kid. \n - no changes -",
+        text = tk.Label(self, text="It is obviously what human beings do when they are sick. Good job kid. \n -2 money ",
                         font=controller.title_font, wraplength=580).grid(row=6, column=0)
-
+        player.editMoney(2, 0)
+        
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageSeven")).grid(row=7, column=0)
 
@@ -827,13 +863,15 @@ class PageSix(tk.Frame):
         if outcome == 0:
             text = tk.Label(self, text="""You fell asleep. It is 9 pm when you wake up again.
 You have missed all the classes and deadlines. Luckily, you feel better now.
-Academics -1 """,
+-1 academics, +1 physical health, +1 mental health """,
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
             player.editAcad(-1,1)
+            player.editPHealth(1, 1)
+            player.editMHealth(1, 1)
         else:
-            text = tk.Label(self, text="""You got sicker and sicker. You waked up in hospital.
-Your friend called you an ambulance.
-Money -5, Physical health -2, Mental health -2""",
+            text = tk.Label(self, text="""You got sicker and sicker. You blacked out and woke up in the hospital.
+Your friend called an ambulance for you.
+-5 money, -2 physical health, -2 mental health""",
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
             player.editMHealth(-2, 1)
             player.editMoney(-5, 1)
@@ -846,22 +884,23 @@ Money -5, Physical health -2, Mental health -2""",
     def option4(self, controller):
         #self.disable_buttons()
 
-        # 1/10 chace to get a bad outcome
-        outcome = random.randint(0,9)
+        # 1/4 chace to get a good outcome
+        outcome = random.randint(0,3)
 
         if outcome == 0:
             text = tk.Label(self, text="""Your friend sends you to the hospital.
 Everyone knew you were sick, and got presents for you!.
-Social life +1, Mental health +1""",
++1 social life, +1 mental health, +1 physical health""",
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
-            player.editSL(-1, 1)
+            player.editSL(1, 1)
             player.editMHealth(1, 1)
+            player.editPHealth(1, 1)
 
         else:
-            text = tk.Label(self, text="Nobody replied your message, so you were greatly depressed \n Mental health -1, Physical health -1",
+            text = tk.Label(self, text="Nobody replied your message, so you were greatly depressed \n -2 mental health, -2 physical health",
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
-            player.editPHealth(-1, 1)
-            player.editMHealth(-1, 1)
+            player.editPHealth(-2, 1)
+            player.editMHealth(-2, 1)
 
         next_button = ttk.Button(self, text="Next",
                                  command=lambda: controller.show_frame("PageSeven")).grid(row=7, column=0)
@@ -970,7 +1009,6 @@ But your friends think you're a free loader for not contributing anything.
 
         text = tk.Label(self, text="""Prof ordered the closure of the discord chat and made the students involved sit for the quiz physically
 Somehow it was leaked that you were the whistleblower, your friends are NOT happy
-But prof commends you for your courage in doing the right thing!
 +2 academics, -4 social life, -1 mental health""",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
         player.editAcad(2, 1)
@@ -994,7 +1032,7 @@ class PageEight(tk.Frame):
         #label.pack(side="top", fill="x", pady=10)
         button = ttk.Button(self, text="See your score",
                            command=lambda: controller.show_frame("Final"))
-        button.pack()
+        button.grid(row=1, column=0)
 
 class PageGameover(tk.Frame):
 
@@ -1008,13 +1046,14 @@ class PageGameover(tk.Frame):
         if gameover == "Academics":
             text = """With your current grades, there is no way you will be able to pass this semester.
 Best to turn over a new leaf and study harder!"""
-        elif gameover == "Social Life":
+        elif gameover == "Social life":
             text = "We can relate."
         elif gameover == "Physical health":
             text = "Due to ailing health, you have taken a Leave of Absence and will not be finishing the semester."
         elif gameover == "Mental health":
-            text = """Due to a mental breakdown in school, you have been required to take a Leave of Absence and attned couseling
-The school hopes that you will be able to return in a better state next semester."""
+            text = """Due to a mental breakdown in school, you have been required to take a Leave of Absence and attened couseling.
+The school hopes that you will be able to return in a better state next semester.
+Mental health is important! Please take care of yourself."""
         elif gameover == "Money":
             text = """University is expensive!
 You do not have enough funds to pay your school fees next semester. This is the start of student debt.
@@ -1052,6 +1091,6 @@ class Final(tk.Frame):
 
 if __name__ == "__main__":
     app = SampleApp()
-    app.wm_geometry("600x1000")
+    app.geometry("600x1000")
     app.mainloop()
 
