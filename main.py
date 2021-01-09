@@ -6,13 +6,13 @@ from PIL import ImageTk, Image
 import pygame
 import random
 
-##pygame.mixer.init()
-##
-##def play():
-##    pygame.mixer.music.load("song.mp3")
-##    pygame.mixer.music.play(loops = 2)
-##
-##play()
+pygame.mixer.init()
+
+def play():
+    pygame.mixer.music.load("song.mp3")
+    pygame.mixer.music.play(loops = 2)
+
+play()
 
 gameover = "none"
 final = "none"
@@ -123,7 +123,6 @@ class SampleApp(tk.Tk):
         stats_frame.place(x=0, y=0)
 
         self.container = tk.Frame(self)
-##        container.pack(side="top", fill="both", expand=True)
         self.container.place(x=0, y=30)
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
@@ -143,12 +142,6 @@ class SampleApp(tk.Tk):
         self.show_frame("StartPage")
 
     def doChecks(self):
-##        end = player.gameOver()
-##        if end != None:
-##            frame = PageGameover(parent=self.container, controller=self, stat=end)
-##            frame.tkraise()
-##            return
-
         warnings = player.warning()
         if len(warnings) == 1:
             messagebox.showwarning("WARNING!", warnings[0] + " is below 3!")
@@ -726,8 +719,6 @@ class PageFive(tk.Frame):
         self.opt4 = ttk.Button(self, text="Go help your friend, but bring your study notes to revise while you comfort them",
                            command=lambda: self.option4(controller))
         self.opt4.grid(row=4, column=0)
-##        home_button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage")).grid(row=5,         column=1)
 
      # makes sure plaer cannot choose another option after pressing a button
     def disable_buttons(self):
@@ -833,8 +824,6 @@ class PageSix(tk.Frame):
         self.opt4 = ttk.Button(self, text="Spam everyone you know and cry to them",
                           command=lambda: self.option4(controller))
         self.opt4.grid(row=5, column=0)
-##        home_button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
 
     # makes sure plaer cannot choose another option after pressing a button
     def disable_buttons(self):
@@ -946,8 +935,7 @@ class PageSeven(tk.Frame):
         self.opt4 = ttk.Button(self, text="Be a whistleblower! Flag this discord group to your prof.",
                           command=lambda: self.option4(controller))
         self.opt4.grid(row=4, column=0)
-##        home_button = ttk.Button(self, text="Home",
-##                           command=lambda: controller.show_frame("StartPage")).grid(row=5, column=1)
+
 
     # makes sure plaer cannot choose another option after pressing a button
     def disable_buttons(self):
@@ -1045,8 +1033,6 @@ class PageEight(tk.Frame):
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
-        #label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
-        #label.pack(side="top", fill="x", pady=10)
         button = ttk.Button(self, text="See your score",
                            command=lambda: controller.show_frame("Final"))
         button.grid(row=1, column=0)
@@ -1068,8 +1054,7 @@ Best to turn over a new leaf and study harder!"""
         elif gameover == "Physical health":
             text = "Due to ailing health, you have taken a Leave of Absence and will not be finishing the semester."
         elif gameover == "Mental health":
-            text = """Due to a mental breakdown in school, you have been required to take a Leave of Absence and attened couseling.
-The school hopes that you will be able to return in a better state next semester.
+            text = """Due to a mental breakdown in school, you have been required to take a Leave of Absence and attend couseling. The school hopes that you will be able to return in a better state next semester.
 Mental health is important! Please take care of yourself."""
         elif gameover == "Money":
             text = """University is expensive! You do not have enough funds to pay your school fees next semester. This is the start of student debt.
