@@ -181,6 +181,9 @@ class SampleApp(tk.Tk):
             frame = Final(parent=self.container, controller=self)
             frame.grid(row=0, column=0, sticky="nsew")
             frame.tkraise()
+        elif page_name == "PageEight":
+            frame = self.frames[page_name]
+            frame.tkraise()
         else:
             frame = self.frames[page_name]
             frame.tkraise()
@@ -216,34 +219,46 @@ class StartPage(tk.Frame):
     def drMagic(self, name, controller):
         global player
         player = Player(name, 7, 5, 8)
-        text = tk.Label(self, text="Hello " + name + " you have chosen Dr Magic!", padx=40).grid(row=4, column=0, columnspan=2)
+        text = tk.Label(self, text="Hello " + name + ", you have chosen Dr Magic!", padx=40).grid(row=4, column=0, columnspan=2)
+        text2 = tk.Label(self, text="""Read each scenario and make a choice!
+Every choice will affect your stats, make sure none drop to 0, or else the game will end!
+Can you survive your first semester? Good luck!""", wraplength=580).grid(row=5, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
-        button1.grid(row=5, column=0, columnspan=2)
+        button1.grid(row=6, column=0, columnspan=2)
 
     def snakeMaster(self, name, controller):
         global player
         player = Player(name, 9, 5, 6)
-        text = tk.Label(self, text="Hello " + name + " you have chosen Snake Master!", padx=40).grid(row=4, column=0, columnspan=2)
+        text = tk.Label(self, text="Hello " + name + ", you have chosen Snake Master!", padx=40).grid(row=4, column=0, columnspan=2)
+        text2 = tk.Label(self, text="""Read each scenario and make a choice!
+Every choice will affect your stats, make sure none drop to 0, or else the game will end!
+Can you survive your first semester? Good luck!""", wraplength=580).grid(row=5, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
-        button1.grid(row=5, column=0, columnspan=2)
+        button1.grid(row=6, column=0, columnspan=2)
 
     def wonderGuitar(self, name, controller):
         global player
         player = Player(name, 6, 5, 9)
-        text = tk.Label(self, text="Hello " + name + " you have chosen Wonder Guitar!", padx=40).grid(row=4, column=0, columnspan=2)
+        text = tk.Label(self, text="Hello " + name + ", you have chosen Wonder Guitar!", padx=40).grid(row=4, column=0, columnspan=2)
+        text2 = tk.Label(self, text="""Read each scenario and make a choice!
+Every choice will affect your stats, make sure none drop to 0, or else the game will end!
+Can you survive your first semester? Good luck!""", wraplength=580).grid(row=5, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
-        button1.grid(row=5, column=0, columnspan=2)
+        button1.grid(row=6, column=0, columnspan=2)
 
     def tricepMan(self, name, controller):
         global player
         player = Player(name, 4, 9, 7)
-        text = tk.Label(self, text="Hello " + name + " you have chosen Tricep Man!", padx=40).grid(row=4, column=0, columnspan=2)
+        text = tk.Label(self, text="Hello " + name + ", you have chosen Tricep Man!", padx=40).grid(row=4, column=0, columnspan=2)
+        text2 = tk.Label(self, text="""Read each scenario and make a choice!
+Every choice will affect your stats, make sure none drop to 0, or else the game will end!
+Can you survive your first semester? Good luck!""", wraplength=580).grid(row=5, column=0, columnspan=2)
         button1 = ttk.Button(self, text="Start Game",
                             command=lambda: controller.show_frame("PageOne"))
-        button1.grid(row=5, column=0, columnspan=2)
+        button1.grid(row=6, column=0, columnspan=2)
 
 
 class PageOne(tk.Frame):
@@ -285,15 +300,15 @@ class PageOne(tk.Frame):
         outcome = random.randint(0,1)
 
         if outcome == 0:
-            text = tk.Label(self, text="You had a great time dancing and drinking with your friends :D \n +2 social life, -3 money",
+            text = tk.Label(self, text="You had a great time dancing and drinking with your friends :D \n +2 social life, -4 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 1)
-            player.editMoney(3, 0)
+            player.editMoney(4, 0)
         else:
-            text = tk.Label(self, text="You got drunk and puked all over your friend (ew gross) \n -2 social life, -2 money",
+            text = tk.Label(self, text="You got drunk and puked all over your friend (ew gross) \n -2 social life, -3 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 0)
-            player.editMoney(2, 0)
+            player.editMoney(3, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageTwo")).grid(row=6, column=0)
@@ -307,8 +322,9 @@ class PageOne(tk.Frame):
         if outcome == 0:
             text = tk.Label(self, text="""You fell asleep on the bus ride and missed your stop!
 No more public transport so you had to grab home
--2 money""",
+-3 money""",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
+            player.editMoney(3, 0)
         else:
             text = tk.Label(self, text="You had a great rest ^^ \n +1 mental health, +1 physical health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
@@ -485,11 +501,12 @@ class PageThree(tk.Frame):
     def option1(self, controller):
          self.disable_buttons()
 
-         text = tk.Label(self, text="You are very prepared for next week's quiz, but you are feeling a little lonely \n +1 academics, -1 social life, -1 mental health",
+         text = tk.Label(self, text="""You are very prepared for next week's quiz, but you are feeling a little lonely
++2 academics, -2 social life, -2 mental health""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-         player.editSL(1, 0)
-         player.editAcad(1, 1)
-         player.editMHealth(1, 0)
+         player.editSL(2, 0)
+         player.editAcad(2, 1)
+         player.editMHealth(2, 0)
 
          next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -502,17 +519,17 @@ class PageThree(tk.Frame):
 
         if outcome == 0:
             text = tk.Label(self, text="""You had some fun, but now you are worried that you'll do poorly on Monday's quiz (´･_･`)
-+1 social life, -2 academics""",
++2 social life, -2 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editAcad(2, 0)
             player.editSL(1, 1)
         else:
             text = tk.Label(self, text="""You had a lot of fun, and there is still plenty of time to catch up on school work on Sunday
 But managing social life and academics is hard! Feeling slightly overworked.
-+2 social life -1 physical health""",
++2 social life -2 physical health""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 1)
-            player.editPHealth(1, 0)
+            player.editPHealth(2, 0)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -520,8 +537,8 @@ But managing social life and academics is hard! Feeling slightly overworked.
     def option3(self, controller):
         self.disable_buttons()
 
-        # 1/4 chance to get a bad outcome
-        outcome = random.randint(0, 3)
+        # 1/2 chance to get a bad outcome
+        outcome = random.randint(0, 1)
 
         if outcome == 0:
             text = tk.Label(self, text="""Lost all your money gambling... (ಥ⌣ಥ)""",
@@ -529,13 +546,13 @@ But managing social life and academics is hard! Feeling slightly overworked.
             player.editMoney(player.money, 0)
         else:
             text = tk.Label(self, text="""You have a stomachace from all the BBT, you are broke and you haven't revised at all
-    Luckily you haven't lost all your money and even made a new  friend in the process
-    -2 physical health, -3 money, -1 academics, +1 social life, +2 mental health""",
+Luckily you haven't lost all your money and even made a new  friend in the process
+-2 physical health, -4 money, -1 academics, +1 social life, +1 mental health""",
                                  font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(1, 1)
-            player.editMoney(3, 0)
+            player.editMoney(4, 0)
             player.editPHealth(2, 0)
-            player.editMHealth(2, 1)
+            player.editMHealth(1, 1)
             player.editAcad(1,0)
 
         next_button = ttk.Button(self, text="Next",
@@ -557,11 +574,11 @@ Also received some pocket money “ヽ(´▽｀)ノ”
         else:
             text = tk.Label(self, text="""You hung out with your relatives and even took your dog to the park. Fun!
 But you forgot to study for your quiz on Monday... (._.) 
-+1 physical health, +1 mental health, -1 academics""",
++2 physical health, +2 mental health, -2 academics""",
             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editPHealth(1, 1)
-            player.editMHealth(1, 0)
-            player.editAcad(1, 0)
+            player.editPHealth(2, 1)
+            player.editMHealth(2, 0)
+            player.editAcad(2, 0)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageFour")).grid(row=6, column=0)
@@ -618,17 +635,17 @@ Now you have energy to burn midnight oil.
             text = tk.Label(self, text="""Found a packet of Indomie on the counter!
 While cooking it, Indomie owner walks in and catches you in the act ヽ(`Д´)ﾉ
 Now you are known as the resident food theif...
--2 social life, -2 mental health """,
+-3 social life, -2 mental health """,
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(2, 0)
+            player.editSL(3, 0)
             player.editPHealth(2, 0)
         else:
             text = tk.Label(self, text="""Found some yogurt and a banana!
 Yogurt tasted a bit funny... Turned out to be expired (≧︿≦)
 Spent a day on the toilet!
--2 physical health""",
+-3 physical health""",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editPHealth(2, 0)
+        player.editPHealth(3, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
@@ -637,9 +654,9 @@ Spent a day on the toilet!
     def option2(self, controller):
         self.disable_buttons()
 
-        text = tk.Label(self, text="Stomach is happy, wallet is not\n -3 money ",
+        text = tk.Label(self, text="Stomach is happy, wallet is not\nGrabfood is expensive! \n -4 money ",
                         font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editMoney(3, 0)
+        player.editMoney(4, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
@@ -651,15 +668,15 @@ Spent a day on the toilet!
         outcome = random.randint(0,2)
 
         if outcome == 0:
-            text = tk.Label(self, text="None of your friends wanted to eat supper with you... \n -2 social life, -2 mental health",
+            text = tk.Label(self, text="None of your friends wanted to eat supper with you... \n -2 social life, -3 mental health",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 0)
-            player.editMHealth(2, 0)
+            player.editMHealth(3, 0)
         else:
-            text = tk.Label(self, text="Prata and cheese fries... YUM \n +1 social life, -2 money",
+            text = tk.Label(self, text="Prata and cheese fries... YUM \n +2 social life, -3 money",
                             font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editSL(1, 1)
-            player.editMoney(2, 0)
+            player.editSL(2, 1)
+            player.editMoney(3, 0)
 
         next_button = ttk.Button(self, text="Next",
             command=lambda: controller.show_frame("PageFive")).grid(row=6, column=0)
@@ -727,18 +744,18 @@ class PageFive(tk.Frame):
         if outcome == 1:
             text = tk.Label(self, text="""You are a very good friend. Your friend feels a lot better now, and you feel good for helping too.
 The quiz doesn't go that well though
-+2 social life, -2 academics""",
++2 social life, -3 academics""",
                          font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 1)
-            player.editAcad(2, 0)
+            player.editAcad(3, 0)
 
         else:
             text = tk.Label(self, text="""You are a very good friend. Your friend feels a lot better now, and you feel good for helping too.
 The quiz turns out to be quite easy, so you still score well anyway :)
-+2 social life, +2 academics""",
++2 social life, +1 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(1, 1)
-            player.editAcad(2, 1)
+            player.editAcad(1, 1)
 
         next_button = ttk.Button(self, text="Next",
         command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
@@ -749,10 +766,10 @@ The quiz turns out to be quite easy, so you still score well anyway :)
 
         text = tk.Label(self, text="""You finish revising and do well on your quiz
 Your friend is understanding, but seems to be a little hurt by your delayed response
-+1 academics, -2 social life""",
++2 academics, -3 social life""",
         font=controller.title_font, wraplength=580).grid(row=5, column=0)
-        player.editAcad(1, 1)
-        player.editSL(2, 0)
+        player.editAcad(2, 1)
+        player.editSL(3, 0)
 
         next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
@@ -778,14 +795,14 @@ In all  honestly, though, as much as we sympathise... That's a bit of a jerk mov
 
         if outcome == 0:
             text = tk.Label(self, text= """You are terrible at multitasking. Your friend is a little hurt that you didn't give them enough attention, and you weren't able to study much either
--2  social life, -1 academics""",
+-2  social life, -2 academics""",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
             player.editSL(2, 0)
-            player.editAcad(1,0)
+            player.editAcad(2,0)
         else:
             text = tk.Label(self, text="Oddly, this kind of worked out (?) \n +1 academics",
                              font=controller.title_font, wraplength=580).grid(row=5, column=0)
-            player.editAcad(1, 0)
+            player.editAcad(1, 1)
         next_button = ttk.Button(self, text="Next",
              command=lambda: controller.show_frame("PageSix")).grid(row=6, column=0)
 
@@ -863,10 +880,10 @@ class PageSix(tk.Frame):
         if outcome == 0:
             text = tk.Label(self, text="""You fell asleep. It is 9 pm when you wake up again.
 You have missed all the classes and deadlines. Luckily, you feel better now.
--1 academics, +1 physical health, +1 mental health """,
+-3 academics, +2 physical health, +1 mental health """,
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
-            player.editAcad(-1,1)
-            player.editPHealth(1, 1)
+            player.editAcad(-3,1)
+            player.editPHealth(2, 1)
             player.editMHealth(1, 1)
         else:
             text = tk.Label(self, text="""You got sicker and sicker. You blacked out and woke up in the hospital.
@@ -890,17 +907,17 @@ Your friend called an ambulance for you.
         if outcome == 0:
             text = tk.Label(self, text="""Your friend sends you to the hospital.
 Everyone knew you were sick, and got presents for you!.
-+1 social life, +1 mental health, +1 physical health""",
++2 social life, +1 mental health, +1 physical health""",
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
-            player.editSL(1, 1)
+            player.editSL(2, 1)
             player.editMHealth(1, 1)
             player.editPHealth(1, 1)
 
         else:
-            text = tk.Label(self, text="Nobody replied your message, so you were greatly depressed \n -2 mental health, -2 physical health",
+            text = tk.Label(self, text="Nobody replied your message, so you were greatly depressed \n -3 mental health, -2 physical health",
                             font=controller.title_font, wraplength=580).grid(row=6, column=0)
             player.editPHealth(-2, 1)
-            player.editMHealth(-2, 1)
+            player.editMHealth(-3, 1)
 
         next_button = ttk.Button(self, text="Next",
                                  command=lambda: controller.show_frame("PageSeven")).grid(row=7, column=0)
@@ -965,7 +982,7 @@ At least you all failed together?
         self.disable_buttons()
 
         # good outcome if acad > 8
-        if player.acad > 8:
+        if player.acad < 6:
             text = tk.Label(self, text="""Confidence was unfounded. Somehow still did badly...
 But, more importantly, you still have your integrity!
 It's too bad that counts for nothing in this game.
@@ -1041,7 +1058,7 @@ class PageGameover(tk.Frame):
         self.controller = controller
         go_label = tk.Label(self, text="Gameover ༼ ༎ຶ ෴ ༎ຶ༽", font=controller.title_font)
         go_label.pack(side="top", fill="x", pady=10)
-        label = tk.Label(self, text=gameover + " has fallen below 0", font=controller.title_font)
+        label = tk.Label(self, text=gameover + " has fallen to 0", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         if gameover == "Academics":
             text = """With your current grades, there is no way you will be able to pass this semester.
@@ -1055,8 +1072,7 @@ Best to turn over a new leaf and study harder!"""
 The school hopes that you will be able to return in a better state next semester.
 Mental health is important! Please take care of yourself."""
         elif gameover == "Money":
-            text = """University is expensive!
-You do not have enough funds to pay your school fees next semester. This is the start of student debt.
+            text = """University is expensive! You do not have enough funds to pay your school fees next semester. This is the start of student debt.
 Manage your finances better!"""
         label2 = tk.Label(self, text=text, font=controller.title_font, wraplength=580)
         label2.pack(side="top", fill="x", pady=10)
@@ -1069,9 +1085,14 @@ class Final(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        academic = tk.Label(self, text="Best scholar", font=controller.title_font)
-        sport = tk.Label(self, text="Best atheletics", font=controller.title_font)
-        social = tk.Label(self, text="Best social", font=controller.title_font)
+        academic = tk.Label(self, text="""Good job for achieving good grades this semester!
+You have made it to the Dean's List!
+（ ^_^）o自自o（^_^ ）""", font=controller.title_font, wraplength=580)
+        sport = tk.Label(self, text="""Wow! Keeping fit is not easy, good job!
+ᕦ(ò_óˇ)ᕤ""", font=controller.title_font, wraplength=580)
+        social = tk.Label(self, text="""What a social butterfly! Really building those connections in University!
+ᕕ( ᐛ )ᕗ""",
+                          font=controller.title_font, wraplength=580)
 
         score = tk.Label(self, text=str(final), font=controller.title_font)
 
