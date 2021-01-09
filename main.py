@@ -985,8 +985,13 @@ class PageEight(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+
+        self.img = ImageTk.PhotoImage(Image.open("congrats.jpeg").resize((580, 276)))
+        img_label = tk.Label(self, image=self.img)
+        img_label.grid(row=0, column=0)
+
+        #label = tk.Label(self, text="Scenario 2 goes here", font=controller.title_font)
+        #label.pack(side="top", fill="x", pady=10)
         button = ttk.Button(self, text="See your score",
                            command=lambda: controller.show_frame("Final"))
         button.pack()
@@ -1024,6 +1029,7 @@ class Final(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
         academic = tk.Label(self, text="Best scholar", font=controller.title_font)
         sport = tk.Label(self, text="Best atheletics", font=controller.title_font)
         social = tk.Label(self, text="Best social", font=controller.title_font)
