@@ -199,10 +199,10 @@ class StartPage(tk.Frame):
 ##        img_label = ttk.Label(self, image=self.img)
 ##        img_label.pack()
 
-        self.Student1=ImageTk.PhotoImage(Image.open("Student1.jpeg").resize((250, 200)))
-        self.Student2=ImageTk.PhotoImage(Image.open("Student2.jpeg").resize((250, 200)))
-        self.Student3=ImageTk.PhotoImage(Image.open("Student3.jpeg").resize((250, 200)))
-        self.Student4=ImageTk.PhotoImage(Image.open("Student4.jpeg").resize((250, 200)))
+        self.Student1=ImageTk.PhotoImage(Image.open("pic/Student1.png").resize((300, 200)))
+        self.Student2=ImageTk.PhotoImage(Image.open("pic/Student2.png").resize((300, 200)))
+        self.Student3=ImageTk.PhotoImage(Image.open("pic/Student3.png").resize((300, 200)))
+        self.Student4=ImageTk.PhotoImage(Image.open("pic/Student4.png").resize((300, 200)))
 
         opt1 = tk.Button(self, image = self.Student1, command=lambda: self.drMagic(name.get(), controller)).grid(row=2, column=0)
         opt2 = tk.Button(self, image = self.Student2, command=lambda: self.snakeMaster(name.get(), controller)).grid(row=2, column=1)
