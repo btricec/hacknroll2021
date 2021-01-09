@@ -1029,7 +1029,7 @@ class PageEight(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.img = ImageTk.PhotoImage(Image.open("congrats.jpeg").resize((580, 376)))
+        self.img = ImageTk.PhotoImage(Image.open("congrat.jpeg").resize((580, 376)))
         img_label = tk.Label(self, image=self.img)
         img_label.grid(row=0, column=0)
 
